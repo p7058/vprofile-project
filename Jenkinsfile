@@ -1,3 +1,8 @@
+def COLOR_MAP = [
+    'SUCCESS': 'good',
+    'FAILURE': 'danger',
+]
+
 pipeline {
     agent any
     tools {
@@ -60,7 +65,7 @@ pipeline {
         }
         stage('Quality Gate'){
             steps{
-                timeout(time:1, unit: 'HOURS'){
+                timeout(time:10, unit: 'MINUTES'){
                     waitForQualityGate abortPipeline: true
                 }
             }
@@ -83,6 +88,14 @@ pipeline {
                     ]
                 )
             }
+        }
+    }
+    post {
+        always {
+            echo 'Slack notifications.'
+            slackSend channel: '#jenkinscicd',
+             color: COLOR_MAP[currentBuild.currentResult],
+             message: "*$currentBuild.currentResult:* Job $env.JOB_NAME build $env.BUILD_NUMBER \n"
         }
     }
 }
