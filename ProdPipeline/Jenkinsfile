@@ -4,7 +4,11 @@ def COLOR_MAP = [
 ]
 pipeline {
     agent any
+
     environment {
+        registryCredential = 'ecr:us-east-1:awscred'
+        appRegistry = '380907317030.dkr.ecr.us-east-1.amazonaws.com/vprofile'
+        vprofileRegistry = 'https://380907317030.dkr.ecr.us-east-1.amazonaws.com'
         cluster = 'vproprod'
         service = 'vproprod'
     }
