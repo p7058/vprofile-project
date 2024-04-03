@@ -2,14 +2,11 @@ def COLOR_MAP = [
     'SUCCESS': 'good',
     'FAILURE': 'danger',
 ]
-
 pipeline {
     agent any
-
     environment {
         cluster = 'vproprod'
         service = 'vproprod'
-
     }
     stages {
         stage ('Deploy to Prod ECS'){
